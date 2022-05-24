@@ -37,6 +37,7 @@ const payingBank = [
 export function ListEmployees() {
   const [status, setStatus] = useState('')
   const [employeesCnab, setEmployeesCnab] = useState<ListEmployeesCNABProps[]>([])
+  const [totalBradesco, setTotalBradesco]= useState(0)
   let emploeeysAll: ListEmployeesCNABProps[] = []
   let emploeeys: ListEmployeesProps[] = []
 
@@ -77,7 +78,11 @@ export function ListEmployees() {
         }
         return data
       })
+
       setEmployeesCnab(emploeeysAll)
+
+      setTotalBradesco(emploeeysAll.filter((numeros) => numeros.bankBranch.slice(0, 3) === '237').length)
+
     }
   }
 
@@ -99,14 +104,8 @@ export function ListEmployees() {
   return (
     <View style={styles.container}>
       <Header title='Listam de Funcionários' />
-      <FlatList
-        data={employeesCnab}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => (
-          <ListCard
-            item={item}
-            onPress={() => handleDeleteEmployee(item.id)}
-          />
+      <FlatList data={employeesCnab} keyExtractor={item => item.id} renderItem={({ item }) => (
+          <ListCard item={item} onPress={() => handleDeleteEmployee(item.id)} />
         )}
       />
     </View>

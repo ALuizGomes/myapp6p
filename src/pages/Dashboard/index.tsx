@@ -3,7 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
   View,
   StyleSheet,
-  Alert
+  Alert,
+  ScrollView
 } from 'react-native'
 
 import { Button } from '../../components/Button'
@@ -59,40 +60,21 @@ export function Dashboard() {
     <View style={styles.container}>
       <Header title='Cadastro Funcionários' />
 
-      <Input
-        placeholder='CPF'
-        value={cpf}
-        onChangeText={value => setCpf(value)}
-      />
+      <ScrollView>
 
-      <Input
-        placeholder='Nome'
-        value={name}
-        onChangeText={value => setName(value)}
-      />
+        <Input placeholder='CPF' value={cpf} onChangeText={value => setCpf(value)} />
 
-      <Input
-        placeholder='banco/agência'
-        value={bankBranch}
-        onChangeText={value => setBankBranch(value)}
-      />
+        <Input placeholder='Nome' value={name} onChangeText={value => setName(value)} />
 
-      <Input
-        placeholder='conta'
-        value={account}
-        onChangeText={value => setAccount(value)}
-      />
+        <Input placeholder='banco/agência' value={bankBranch} onChangeText={value => setBankBranch(value)} />
 
-      <Input
-        placeholder='salário'
-        value={salary}
-        onChangeText={value => setSalary(value)}
-      />
+        <Input placeholder='conta' value={account} onChangeText={value => setAccount(value)} />
 
-      <Button
-        title='Incluir'
-        onPress={handleAddUser}
-      />
+        <Input placeholder='salário' value={salary} onChangeText={value => setSalary(value)} />
+
+        <Button title='Incluir' onPress={handleAddUser} />
+        
+      </ScrollView>
     </View>
   )
 }
