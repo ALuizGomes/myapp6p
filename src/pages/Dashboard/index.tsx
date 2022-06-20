@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import {
-  View,
-  StyleSheet,
-  Alert,
-  ScrollView
-} from 'react-native'
+import { View, StyleSheet, Alert, ScrollView } from 'react-native'
 
 import { Button } from '../../components/Button'
 import { Header } from '../../components/Header'
 import { Input } from '../../components/Input'
+import { InputMask } from '../../components/InputMaskCPF'
+import { InputMaskSalary } from '../../components/InputMaskSalary'
+import { InputMaskBankBranch } from '../../components/InputMaskBankBranch'
+import { InputMaskBirthDate } from '../../components/InputMaskBirthDate'
 
 export function Dashboard() {
   const [cpf, setCpf] = useState('')
@@ -17,6 +16,7 @@ export function Dashboard() {
   const [bankBranch, setBankBranch] = useState('')
   const [account, setAccount] = useState('')
   const [salary, setSalary] = useState('')
+  const [birthDate, setBirthDate] = useState('')
 
   async function handleAddUser() {
     const employee = {
@@ -25,8 +25,12 @@ export function Dashboard() {
       name,
       bankBranch,
       account,
-      salary
+      salary,
+      birthDate: convertDate(birthDate)
     }
+
+    console.log(employee)
+
     try {
       const data = await AsyncStorage.getItem('@si:employees')
       const currentData = data ? JSON.parse(data) : []
@@ -45,11 +49,17 @@ export function Dashboard() {
     setBankBranch('')
     setAccount('')
     setSalary('')
+    setBirthDate('')
   }
 
   async function loadDataEmployee() {
     const data = await AsyncStorage.getItem('@si:employees')
     const currentData = data ? JSON.parse(data) : []
+  }
+
+  function convertDate (data: string) {
+    const dateArray = data.split('/')
+    return new Date(dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2])
   }
 
   useEffect(() => {
@@ -62,15 +72,17 @@ export function Dashboard() {
 
       <ScrollView>
 
-        <Input placeholder='CPF' value={cpf} onChangeText={value => setCpf(value)} />
+        <InputMask placeholder='CPF' value={cpf} onChangeText={value => setCpf(value)} />
 
-        <Input placeholder='Nome' value={name} onChangeText={value => setName(value)} />
+        <InputMaskBirthDate placeholder='Data de Nascimento' value={birthDate} onChangeText={value => setBirthDate(value)} />
 
-        <Input placeholder='banco/agência' value={bankBranch} onChangeText={value => setBankBranch(value)} />
+        <Input placeholder='Nome' autoCapitalize='words' value={name} onChangeText={value => setName(value)} />
+
+        <InputMaskBankBranch placeholder='banco/agência' value={bankBranch} onChangeText={value => setBankBranch(value)} />
 
         <Input placeholder='conta' value={account} onChangeText={value => setAccount(value)} />
 
-        <Input placeholder='salário' value={salary} onChangeText={value => setSalary(value)} />
+        <InputMaskSalary placeholder='salário' value={salary} onChangeText={value => setSalary(value)} />
 
         <Button title='Incluir' onPress={handleAddUser} />
         

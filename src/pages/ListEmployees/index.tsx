@@ -13,6 +13,7 @@ interface ListEmployeesProps {
   bankBranch: string,
   account: string,
   salary: string,
+  birthSalary: Date
 }
 
 interface ListEmployeesCNABProps {

@@ -1,5 +1,7 @@
 import { View, TextInput, StyleSheet, TextInputProps, TouchableOpacityProps } from 'react-native'
 
+import { TextInputMask } from 'react-native-masked-text'
+
 type InputProps = TextInputProps
 
 // interface ButtonProps extends TouchableOpacityProps {
@@ -7,12 +9,11 @@ type InputProps = TextInputProps
 // }
 // export function Button({title, ...rest}: ButtonProps){}
 
-export function Input({ ...rest }: InputProps) {
+export function InputMaskBankBranch({ ...rest }: InputProps) {
   return (
     <View style={styles.container}>
-      <TextInput
-        {...rest}
-        style={styles.inputStyle} />
+      <TextInputMask type={'custom'}{...rest} style={styles.inputStyle} 
+        options={{ mask: '999/9999' }}/>
     </View>
   )
 }
